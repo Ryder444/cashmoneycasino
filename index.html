@@ -1,0 +1,369 @@
+<html>
+    <head>
+        <style>
+            body{
+                background-image: url("background.jpg");
+            }
+            
+            #bodytab{
+                margin: 0 auto;
+                width: 270px;
+                height: 700px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                background-color: rgba(0, 0, 0, 1);
+                color: white;
+                border: ridge 5px green;
+                padding: 15px;
+                padding-bottom: 0;
+                box-shadow: 10px 10px 10px black;
+                animation: border1 2s infinite;
+            }
+            
+            #header{
+                width: auto;
+                text-align: center;
+                font-size: 30px;
+                color: white;
+                animation: rainbow 2s linear infinite;
+                font-weight: bold;
+                font-family: impact;
+                }
+            
+            select{
+                font-size: 15px;
+            }
+            
+            h2{
+                text-shadow: 5px 5px 5px black;
+            }
+            
+            #submitbutton{
+                height: 50px;
+                width: 100px;
+                background-color: green;
+                border-style: none;
+            }
+            #submitbutton:hover{
+                background-color: black;
+                color: green;
+                border: ridge 2px white;
+            }
+            #submitbutton:active{
+            background-color: lawngreen;
+            }
+
+            .coin{
+                width: 100px;
+                height: auto;
+                position: absolute;
+                transform-style: preserve-3d;
+                backface-visibility: hidden;
+            }
+            
+            .active{
+                transform: rotateY(1080deg);
+            }
+            
+            #all{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            #coin1, #coin2{
+                padding: 2.5px;
+                transform-style: preserve-3d;
+                height: 100px;
+                width: 100px;
+                transition: all 2s cubic-bezier(.12,.61,.2,.97);
+            }
+            
+            
+            #coin1back{
+                transform: rotateY(180deg);
+            }
+            #coin2back{
+                transform: rotateY(180deg);
+            }
+            
+            #l{
+                height: 200px;
+            }
+            
+            hr{
+                width: 100%;
+                border-style: dashed;
+            }
+            
+            #money1{
+                padding: 10px;
+                background-color: lawngreen;
+                color: green;
+                border: 2px ridge green;
+            }
+            
+            #flow{
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url("money.png");
+                background-repeat: repeat;
+                background-size: auto auto;
+                transform: translateY(-100%);
+            }
+            
+            #fair{
+                text-decoration: underline;
+                color: blue;
+                margin: 0;
+                margin-top: 5px;
+                padding: 0;
+            }
+            
+            #fair:hover{
+                cursor: pointer;
+            }
+            
+            
+            @keyframes flowdown{
+                from{transform: translateY(-100%)}
+                to{transform: translateY(100%)}
+            }
+            
+            @keyframes rainbow{
+                0%{color: rgb(255, 0, 0)}
+                10%{color: 	rgb(255, 128, 0)}
+                20%{color: rgb(255, 255, 0)}
+                30%{color: rgb(64, 255, 0)}
+                40%{color: 	rgb(0, 255, 128)}
+                50%{color: 	rgb(0, 255, 255)}
+                60%{color: rgb(0, 128, 255)}
+                70%{color: 	rgb(0, 0, 255)}
+                80%{color: 	rgb(128, 0, 255)}
+                90%{color: 	rgb(255, 0, 191)}
+                100%{color: rgb(255, 0, 0)}
+            }
+            
+            @keyframes border1{
+                0%{border: ridge rgb(255, 0, 0) 2px;}
+                10%{border: ridge 2px rgb(255, 128, 0)}
+                20%{border: ridge 2px rgb(255, 255, 0)}
+                30%{border: ridge 2px rgb(64, 255, 0)}
+                40%{border: ridge 2px rgb(0, 255, 128)}
+                50%{border: ridge 2px rgb(0, 255, 255)}
+                60%{border: ridge 2px rgb(0, 128, 255)}
+                70%{border: ridge 2px rgb(0, 0, 255)}
+                80%{border: ridge 2px rgb(128, 0, 255)}
+                90%{border: ridge 2px rgb(255, 0, 191)}
+                100%{border: ridge 2px rgb(255, 0, 0)}
+            }
+            
+        </style>
+    </head>
+    <body id="body">
+        <audio id="winaudio"><source src="ka-ching.mp3" type="audio/mp3"></audio>
+        <audio id="loseaudio"><source src="lose.mp3" type="audio/mp3"></audio>
+        <audio id="tieaudio"><source src="tie.mp3" type="audio/mp3"></audio>
+        <div id="header">
+            <h2>Cash Money Coin Flip</h2>
+        </div>
+        <div id="bodytab">
+            <div id="flow">
+            </div>
+            <div id="l">
+            <div id="coin1">
+                <div id="1front">
+                    <img src="coin.png" class="coin" id="coin1front">
+                </div>
+                <div id="1back">
+                    <img src="coin2.png" class="coin" id="coin1back">
+                </div>
+            </div>
+            <div id="coin2">
+                <div id="2front">
+                    <img src="coin.png" class="coin" id="coin2front">
+                </div>
+                <div id="1back">
+                    <img src="coin2.png" class="coin" id="coin2back">
+                </div>
+            </div>
+            </div>
+            <div id="all">
+            <p id="money1">Money: $50</p>
+            <p id="result"></p>
+            <p>Choose your bet:</p>
+            <select id="form">
+                <option value="1">Two Heads</option>
+                <option value="2">Two Tails</option>
+            </select><br>
+            <hr>
+            <p id="wageramount">Wager ($25)</p>
+            <input type="range" min="0" max="50" step="5" style="padding: 20px" onchange="updatewager()" value="25" id="range"><br>
+            <div id="roll">
+                <input type="submit" onclick="playGame()" value="Roll!" id="submitbutton">
+            </div>
+            </div>
+            <p id="fair" onclick="alert1()">Provably Fair</p>
+            <p>© Darby Edwards 2017</p>
+        </div>
+    </body>
+    <head>
+    <script>
+        var money = 50;
+        var wager = 0; 
+        var audio = new Audio('ka-ching.mp3');
+
+            
+        function updatewager(){
+            document.getElementById("wageramount").innerHTML = "Wager ($" + document.getElementById("range").value + ")";
+        }
+        
+        function playGame(){
+            //money
+            if(money <= 0){
+                document.getElementById("bodytab").innerHTML = "<p>You are a cheat!</p>"
+            }
+            var presult = document.getElementById("form").value;
+            var wager = document.getElementById("range").value;
+            
+            function updateresult(){
+                    if(result1 == 1 && result2 == 1 && presult == "1"){
+                        document.getElementById("result").innerHTML = "You have won!";
+                        document.getElementById("bodytab").style.backgroundColor = "green";
+                        document.getElementById("flow").style.animation = "flowdown 0.5s forwards linear";
+                        document.getElementById('winaudio').play();
+                        money = money + parseInt(wager);
+                    }
+                    else if(result1 == 2 && result2 == 2 && presult == "2"){
+                        document.getElementById("result").innerHTML = "You have won!";
+                        document.getElementById("bodytab").style.backgroundColor = "green";
+                        document.getElementById("flow").style.animation = "flowdown 0.5s forwards linear";
+                        document.getElementById('winaudio').play();
+                        money = money + parseInt(wager);
+                    }
+                    else if((result2 == 1 && result1 == 2) || (result2 == 2 && result1 == 1)){
+                        document.getElementById("result").innerHTML = "It is a tie!";
+                        document.getElementById("bodytab").style.backgroundColor = "yellow";
+                        document.getElementById('tieaudio').play();
+                    }
+                    else{
+                        document.getElementById("result").innerHTML = "You have lost!";
+                        document.getElementById("bodytab").style.backgroundColor = "red";
+                        document.getElementById("wageramount").innerHTML = "Wager ($?)";
+                        document.getElementById('loseaudio').play();
+                        money -= parseInt(wager);
+                    }
+                    
+                    if(money == 0){
+                            document.getElementById("bodytab").innerHTML = "Unfortunately you are a horrible gambler and have no money left! <br><a href='javascript:location.reload(true)'>Refresh this page</a>"
+                    }
+                    
+                    document.getElementById("money1").innerHTML = "Money: $" + money;
+                    document.getElementById("range").max = money;
+                
+                    setTimeout(function(){
+                        document.getElementById("bodytab").style.backgroundColor = "black";
+                        document.getElementById("flow").style.animation = "";
+                    }, 500);
+            }
+            
+            
+            
+            //get values for resetting
+                var resetbutton = document.getElementById("roll").innerHTML;
+                var resetinnerHTML = document.getElementById("l").innerHTML;
+            
+            //make button not clickable
+                document.getElementById("roll").innerHTML = "";
+            //make button clickable again
+                setTimeout(function(){
+                    document.getElementById("roll").innerHTML = resetbutton;
+                }, 3300);
+            
+            //create results randomly
+                var result1 = Math.ceil(Math.random()*2);
+                var result2 = Math.ceil(Math.random()*2);
+                console.log(result1, result2);
+                //if result == 1 then it = heads
+                //if result == 2 then it = tails 
+            
+            //animation
+            
+            
+                var headsarray = [];
+                for(i = 1; i <= 7; i++){
+                    headsarray[i-1] = i * 360;
+                }
+                var tailsarray = []
+                for(i = 1; i <= 7; i++){
+                    var o = [1, 3, 5, 7, 9, 11, 13];
+                    tailsarray[i-1] = 180*o[i-1];
+                }
+                
+                //choose how much to rotate
+                var coin1rotation;
+                var coin2rotation;
+                    
+                    //coin1
+                    if(result1 == 1){
+                        //heads
+                        var selection = Math.floor(Math.random()*7);
+                        coin1rotation = headsarray[selection];
+                    }
+                    else if(result1 == 2){
+                        //tails
+                        var selection = Math.floor(Math.random()*7);
+                        coin1rotation = tailsarray[selection];
+                    }
+            
+                    //coin2
+                    if(result2 == 1){
+                        //heads
+                        var selection = Math.floor(Math.random()*7);
+                        coin2rotation = headsarray[selection];
+                    }
+                    else if(result2 == 2){
+                        //tails
+                        var selection = Math.floor(Math.random()*7);
+                        coin2rotation = tailsarray[selection];
+                    }
+
+                var style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerHTML = '.active1 { transform: rotateY('+coin1rotation+'deg); }';
+                style.innerHTML += '.active2 { transform: rotateY('+coin2rotation+'deg); }';
+                document.getElementsByTagName('head')[0].appendChild(style);
+            
+                document.getElementById("coin1").classList.add("active1");
+                document.getElementById("coin2").classList.add("active2");
+                
+            
+                setTimeout(function(){
+                    document.getElementById("coin1").classList.remove("active");
+                    document.getElementById("coin2").classList.remove("active");
+                    
+                    document.getElementById("l").innerHTML = "Loading new game...";
+                }, 3000);
+            
+                
+                setTimeout(function(){
+                    document.getElementById("l").innerHTML = resetinnerHTML; 
+                    
+                }, 3500);
+            
+            //end animation
+    
+            
+            setTimeout(updateresult, 2100);
+        }
+        
+        function alert1(){
+            alert("Trust me, its fair.");
+        }
+    </script>
+    </head>
+</html>
